@@ -1,0 +1,192 @@
+$(function(){
+  
+	jQuery.fn.extend({
+		
+		TreeMenu: function(options){
+			
+				var prop = jQuery.extend({
+					
+					ParentColor:'',
+					ChildColor:'',
+					smHandlerColor:''
+					
+					},options);
+					
+					
+			
+			var parent = $(this).attr('id');
+	
+	        $("#"+parent+" li[name=sm]").css({color:prop.smHandlerColor});
+	   
+	$(this).children("li").each(function(){
+	
+	 
+	 	
+				
+		if($(this).parent().attr("id") == parent){
+				 
+				 var self = $(this);
+			
+			
+			
+			     self.click(function(e){
+					 
+					 
+					 if(e.target.nodeName != "INPUT" && $(e.target).parent().attr("id") == parent){
+						 
+						 
+						 var ul1 = $(this).find("ul:eq(0)");
+							  
+						 if(ul1.css("display")=="none"){
+							  
+							     ul1.show("fast");
+								 
+							
+								 
+							  
+							  }else{
+								  
+							$(this).find("ul").each(function(){
+								
+								 $(this).hide();
+								
+								});
+								  
+						
+								  }
+						 
+						 
+						 }else if(e.target.nodeName == "INPUT"  && $(e.target).parent().parent().attr("id") == parent){
+							 
+							 var mainItem = e.target;
+							 mainItem = $(mainItem);
+						
+						   if(mainItem.is(":checked")){
+								   
+							    self.find("input:checkbox").each(function(i){
+							
+										 $(this).attr({checked:"checked"});			 
+									
+									});
+								
+								 
+								 }else{
+									self.find("input:checkbox").each(function(){
+									  $(this).removeAttr('checked');
+									
+									});
+									 
+									 }
+						
+							 
+							 
+							 }
+					 
+					 
+					 });
+			
+			
+			
+				self.find("ul").each(function(i){
+					 
+					 
+					 
+					 if(i==0){
+					 
+					    var subMenuParent = $(this);
+					 
+					 
+	                     subMenuParent.css({color:prop.ParentColor});
+						 subMenuParent.hide();
+	                 
+					 
+					 }else{
+						 
+						 var subMenuChild = $(this);
+						 
+						 subMenuChild.css({color:prop.ChildColor});
+						 subMenuChild.hide();
+						 
+						 
+						 }
+				   				 
+					 });
+				
+				
+			
+					
+					$("li[name=sm]").click(function(e){
+						var subMenu = $(this);
+						var sm = e.target;
+						sm = $(sm);
+						if(e.target.nodeName != "INPUT" && sm.attr("name") == "sm"){
+							
+							  
+						var ul1 = $(this).find("ul:eq(0)");
+							  
+						 if(ul1.css("display")=="none"){
+							  
+							     ul1.show("fast");
+								 
+							
+						
+							  
+							  }else{
+								  
+							$(this).find("ul").each(function(){
+								
+								 $(this).hide();
+								
+								});
+								  
+						
+						  return false;
+						
+								  }
+							
+						}else if(e.target.nodeName == "INPUT" && sm.parent().attr("name") == "sm"){
+							
+						
+						  
+						  
+						  if(sm.attr("checked")){
+						
+						
+							    $(sm.parent()).find("input:checkbox").each(function(i){
+										 
+										 $(this).attr({checked:"checked"});
+										 
+						
+									
+									});
+								 
+								 }else{
+									$(sm.parent()).find("input:checkbox").each(function(){
+									  $(this).removeAttr('checked');
+									
+									});
+									 
+									 }
+						  
+						  
+						  
+						  }
+
+				
+							
+							
+						
+						
+						});
+					 
+	}
+		
+	});
+			
+			
+			
+			}	
+		
+		});
+	
+	});
